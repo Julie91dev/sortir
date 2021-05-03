@@ -3,8 +3,28 @@
 {% block title %}Accueil! {{ parent() }}{% endblock %}
 
 {% block body %}
-<p>navigation</p>
+    <div class="container">
+    <div class="text-right">
+        <h5>Date du jour {{ "now" | date('d/m/Y') }}</h5>
+        <h5>Participant {{ app.user.prenom }} {{ app.user.nom | slice(0, 1)}}. </h5>
+    </div>
+
     <p>TODO :Filtrer les sorties (formulaire recherche)</p>
-    <p>afficher liste sortie</p>
-    <p>bouton creer une sortie</p>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Nom de la sortie</th>
+                <th scope="col">Date de la sortie</th>
+                <th scope="col">Clôture</th>
+                <th scope="col">inscrits/place</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Inscrit</th>
+                <th scope="col">Organisateur</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <a href="#" class="btn btn-info">Créer une sortie</a>
+    </div>
 {% endblock %}
