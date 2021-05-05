@@ -27,8 +27,13 @@ security:
                 # target: app_any_route
             remember_me:
                 secret:   '%kernel.secret%'
+                name: 'REMEMBERME'
                 lifetime: 604800 # 1 week in seconds
                 path:     /
+                samesite: 'lax'
+                httponly: true
+                secure:  true
+                always_remember_me: false
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
