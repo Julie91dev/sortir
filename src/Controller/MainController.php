@@ -2,27 +2,73 @@
 
 namespace App\Controller;
 
-use App\Entity\Campus;
+
 use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\SearchSortieType;
 use App\Repository\CampusRepository;
 use App\Repository\SortieRepository;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class MainController extends AbstractController
 {
     #[Route('/main', name: 'main_home')]
-    public function index(SortieRepository $sortieRepository, Request $request, EntityManagerInterface $manager, CampusRepository $campusRepository): Response
+    public function index(SortieRepository $sortieRepository,
+                          Request $request,
+                          EntityManagerInterface $manager,
+                          CampusRepository $campusRepository,
+                          UserInterface $userInterface): Response
     {
-        //recupération de l'utilisateur connecté
+        //recupération de l'utilisateur connecté // recuperation de l'Id
         $user = $request->getUser();
+
+        //dd($idUser);
         //creation du formulaire de recherche
         $formSearch = $this->createForm(SearchSortieType::class);
+
+        //recupération de toutes les sorties
+        $sorties = $sortieRepository->findAll();
+
+        //gestion de l'etat en fonction de la date
+        $this->dateModifieEtat($sortieRepository,$manager);
+
+
+        //filtre sur les sorties - traitement du formualaire
+            //recupération des info dans la requete
+             $formSearch->handleRequest($request);
+            //Campus selectionné
+        if($formSearch->isSubmitted() && $formSearch->isValid()) {
+            // site sélectionné
+            $criteres = $formSearch->getData();
+            $campusSelect = $campusRepository->find($criteres['campus']);
+            $campusSelect->getNom();
+            $userId = $userInterface->getId();
+            $search = $criteres['search'];
+            $dateDebut = $criteres['dateDebut'];
+            $dateFin = $criteres['dateFin'];
+            $isInscrit = $criteres['isInscrit'];
+            $organiser = $criteres['organiser'];
+            $isNotInscrit = $criteres['isNotInscrit'];
+            $passee = $criteres['passee'];
+            $dateDuJour = new \DateTime('now');
+
+            $sorties = $sortieRepository->searchSorties($campusSelect, $search, $dateDebut, $dateFin, $isInscrit, $organiser,
+                                                       $isNotInscrit, $passee, $userId, $dateDuJour);
+
+        }
+
+        return $this->render('sortie/index.html.twig', [
+            'formSearch' => $formSearch->createView(),
+            'sorties' => $sorties
+        ]);
+    }
+    public function dateModifieEtat(SortieRepository $sortieRepository, EntityManagerInterface $manager){
         //recupération de toutes les sorties
         $sorties = $sortieRepository->findAll();
         //gestion des etats en fonction de la date
@@ -48,64 +94,6 @@ class MainController extends AbstractController
                 $this->changerEtat($sortie, "Passee", $manager);
             }
         }
-        $manager->flush();
-        //filtre sur les sorties - traitement du formualaire
-        //recupération des info dans la requete
-             $formSearch->handleRequest($request);
-            //Campus selectionné
-        if($formSearch->isSubmitted() && $formSearch->isValid()) {
-            $criteres = $formSearch->getData();
-            //Si il y a des critères
-           /* if ($criteres){
-                $campusSelect = $campusRepository->find($criteres['campus']);
-                $search = $criteres['search'];
-                $dateDebut = $criteres['dateDebut'];
-                $dateFin = $criteres['dateFin'];
-
-                $sorties = $sortieRepository->searchSorties(['campus' => $campusSelect] == null,
-                                                            $search == null,
-                                                         $dateDebut == null,
-                                                           $dateFin == null);
-                dd($sorties);
-            }*/
-            if($criteres['campus']) {
-                // site sélectionné
-                $campusSelect = $campusRepository->find($criteres['campus']);
-                $sorties = $sortieRepository->findBy(['campus' => $campusSelect]);
-            }
-            //le nom contient
-            if ($criteres['search']){
-                $search = $criteres['search'];
-
-               $sorties = $sortieRepository->findSearchCharSortie($search);
-            }
-            //Entre les dates
-            if ($criteres['dateDebut'] && $criteres['dateFin']){
-                $dateDebut = $criteres['dateDebut'];
-                $dateFin = $criteres['dateFin'];
-
-                $sorties = $sortieRepository->findDatesSorties($dateDebut, $dateFin);
-            }
-            if($criteres['isInscrit']) {
-                //sortie sur lesquelle je suis inscrit/e
-                $sorties = $this->getUser()->getSorties();
-           }
-            if($criteres['organiser']) {
-                //sortie sur lesquelle je suis organisateur
-                $user = $this->getUser();
-                $sorties = $sortieRepository->findBy(['organisateur' => $user]);
-            }
-           // if($criteres['isNotInscrit']) {}
-            if($criteres['passee']) {
-                $dateDuJour = new \DateTime('now');
-               $sorties = $sortieRepository->findSortiesPassees($dateDuJour);
-
-            }
-        }
-        return $this->render('sortie/index.html.twig', [
-            'formSearch' => $formSearch->createView(),
-            'sorties' => $sorties
-        ]);
     }
     private function changerEtat(Sortie $sortie, string $etatString, EntityManagerInterface $manager)
     {
