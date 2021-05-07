@@ -57,9 +57,10 @@ class MainController extends AbstractController
             $isNotInscrit = $criteres['isNotInscrit'];
             $passee = $criteres['passee'];
             $dateDuJour = new \DateTime('now');
+            $dateDuJourMoinsUnMois = $dateDuJour->sub(new  \DateInterval('P1M'));
 
             $sorties = $sortieRepository->searchSorties($campusSelect, $search, $dateDebut, $dateFin, $isInscrit, $organiser,
-                                                       $isNotInscrit, $passee, $userId, $dateDuJour);
+                                                       $isNotInscrit, $passee, $userId, $dateDuJour, $dateDuJourMoinsUnMois);
 
         }
 
