@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CampusController!{% endblock %}
+
+{% block body %}
+    <div class="text-center text-white">
+        <br>
+        <h2>Gerer les campus</h2>
+    </div>
+    {# formulaire de recherche #}
+
+    <div class="row d-none d-md-block ">
+        <div class="col-12">
+            <div class="box ">
+                <div class="row">
+                    <div class="col-4 ">
+                        <h2 class="text-left">Filtrer les campus</h2>
+                        {{ form_start(formSearchCampus) }}
+
+                        <div class="row">
+                            <div class="col-5">
+                                {{ form_label(formSearchCampus.search) }}
+                            </div>
+                            <div class="col-7">
+                                {{ form_widget(formSearchCampus.search) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <button type="submit"> Rechercher</button>
+                        {{ form_end(formSearchCampus) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <a href="{{ path('campus_ajouter') }}" class="btn btn-success btn-lg">Ajouter un campus</a>
+    </div>
+    <table class=" d-none d-md-block ">
+        <thead >
+        <tr>
+            <th scope="col">Campus</th>
+            <th scope="col">Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for campus in campus %}
+            <tr>
+                <td>{{ campus.nom | upper}}</td>
+
+                <td>
+                    <a href="{{ path('campus_modifier', {'id': campus.id}) }}" class="btn btn-info">Modifier</a>
+                        <a href="{{ path('campus_supprimer', {'id': campus.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+
+                </td>
+
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <div class="text-center d-none d-md-block">
+        <a href="{{ path('admin') }}" class="btn btn-lg btn-info">Retour</a>
+    </div>
+{% endblock %}
+{% block extrastyle %}
+    <style>
+        .box {
+            width: 90%;
+
+            margin-left: 90px;
+            margin-bottom: 30px;
+            padding: 10px;
+            position: inherit;
+            top: inherit;
+            left: inherit;
+
+            text-align: center;
+            transition: inherit;
+            margin-top: 50px;
+
+        }
+        label{
+            margin: 10px auto;
+            padding:inherit;
+            width: inherit;
+            text-transform: none;
+            text-align: inherit;
+            display: inline-block;
+        }
+        .box select,
+        .box input[type="search"],
+        .box input[type="date"],
+        .box input[type="checkbox"]{
+
+            background: none;
+            display: block;
+            margin: 10px auto;
+            text-align: center;
+            border: 2px solid #3498db;
+            padding: inherit;
+            width: inherit;
+            outline: none;
+            color: black;
+            border-radius: 24px;
+            transition: 0.25s
+        }
+        table{
+            margin-top: 50px;
+            margin-left: 270px;
+            margin-right: 230px;
+            padding-right: -10px;
+
+        }
+
+
+    </style>
+{% endblock %}

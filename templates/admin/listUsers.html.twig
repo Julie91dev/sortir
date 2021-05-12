@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="text-center text-white">
+        <h2>Liste de tous les utilisateurs</h2>
+    </div>
+
+    {% if users | length > 0 %}
+        <div >
+            <table>
+                <thead>
+                <tr>
+                    <th scope="col">Pseudo</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Campus</th>
+                    <th scope="col">Actif</th>
+                    <th scope="col">Administrateur</th>
+                </tr>
+                </thead>
+                {% for user in users %}
+                    <tr>
+                        <td><a href="{{ path('profil_detail', {id: user.id}) }}">{{ user.pseudo }}</a></td>
+                        <td>{{ user.nom }}</td>
+                        <td>{{ user.prenom }}</td>
+                        {% if user.telephone is null %}
+                            <td>Non renseigné</td>
+                        {% else %}
+                            <td>{{ user.telephone }}</td>
+                        {% endif %}
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.campus.nom }}</td>
+                        {% if user.actif == 0 %}
+                            <td>
+                                <a href="{{ path('admin_activer', {id: user.id}) }}" class="btn btn-success">Activer</a>
+                                <a href="{{ path('admin_supprimer', {id: user.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                            </td>
+                        {% else %}
+                            <td>
+                                <a href="{{ path('admin_desactiver', {id: user.id}) }}" class="btn btn-info ">Desactiver</a>
+                                <a href="{{ path('admin_supprimer', {id: user.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                            </td>
+                        {% endif %}
+
+                        {% if user.administrateur == 1 %}
+                            <td class="text-center">Oui</td>
+                        {% else %}
+                            <td class="text-center">Non</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+    {% endif %}
+    <div class="text-center d-none d-md-block">
+        <a href="{{ path('admin') }}" class="btn btn-lg btn-info">Retour</a>
+    </div>
+{% endblock %}
+
+{% block title %}
+Admin liste utilisateurs
+{% endblock %}
+{% block extrastyle %}
+    <style>
+        h2{
+            margin-top: 50px;
+        }
+        table{
+            margin-top: 70px;
+        }
+
+    </style>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout ville!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="box">
+                    {{ form_start(formVille) }}
+                    <h3>Ajouter/modifier une ville</h3>
+                    <div class="row">
+                        <div class="col-4 ">
+                            {{ form_label(formVille.nom) }}
+                        </div>
+                        <div class="col-8">
+                            {{ form_widget(form(formVille.nom)) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ">
+                            {{ form_label(formVille.codePostal) }}
+                        </div>
+                        <div class="col-8">
+                            {{ form_widget(formVille.codePostal) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 ">
+                            <button type="submit" value="Enregistrer">Enregistrer</button>
+                        </div>
+                    </div>
+                    {{ form_end(formVille) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

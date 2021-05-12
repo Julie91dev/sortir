@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="box">
+
+                    {{ form_start(formSorties) }}
+
+                    {{ form_label(formSorties.nom) }}
+                    {{ form_widget(formSorties.nom) }}
+
+                    {{ form_label(formSorties.dateHeureDebut) }}
+                    {{ form_widget(formSorties.dateHeureDebut) }}
+
+                    {{ form_label(formSorties.dateLimiteInscription) }}
+                    {{ form_widget(formSorties.dateLimiteInscription) }}
+
+                    {{ form_label(formSorties.nbInscriptionsMax) }}
+                    {{ form_widget(formSorties.nbInscriptionsMax) }}
+
+                    {{ form_label(formSorties.duree) }}
+                    {{ form_widget(formSorties.duree) }}
+
+                    {{ form_label(formSorties.infosSortie) }}
+                    {{ form_widget(formSorties.infosSortie) }}
+
+                    {{ form_label(formSorties.campus) }}
+                    {{ form_widget(formSorties.campus) }}
+
+                    {{ form_label(formSorties.ville) }}
+                    {{ form_widget(formSorties.ville) }}
+                    {{ form_row(formSorties.lieu ) }}
+                    <button type="submit" value="enregistrer" name="enregistrer">Enregistrer</button>
+                    <button type="submit" value="publier" name="publier">Publier la sortie</button>
+                    {{ form_end(formSorties) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block title %}
+    creer sortie | {{ parent() }}
+{% endblock %}
+

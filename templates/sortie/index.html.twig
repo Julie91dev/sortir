@@ -1,0 +1,230 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil! {{ parent() }}{% endblock %}
+
+{% block body %}
+
+        <div class="text-right  d-none d-md-block ">
+            <h5>Date du jour {{ "now" | date('d/m/Y') }}</h5>
+            <h5>Participant {{ app.user.prenom }} {{ app.user.nom | slice(0, 1)}}. </h5>
+        </div>
+
+        {# formulaire de recherche #}
+
+        <div class="row d-none d-md-block ">
+            <div class="col-12">
+                <div class="box ">
+                    <div class="row">
+                        <div class="col-4 ">
+                            <h2 class="text-left">Filtrer les sorties</h2>
+                            {{ form_start(formSearch) }}
+                            <div class="row">
+                                <div class="col-4">
+                                {{ form_label(formSearch.campus) }}
+                                </div>
+                                <div class="col-7">
+                                {{ form_widget(formSearch.campus) }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-5">
+                                {{ form_label(formSearch.search) }}
+                                </div>
+                                <div class="col-7">
+                                {{ form_widget(formSearch.search) }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-3">
+                                        {{ form_label(formSearch.dateDebut) }}
+                                            </div>
+                                            <div class="col-8">
+                                        {{ form_widget(formSearch.dateDebut) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            {{ form_label(formSearch.dateFin) }}
+                                         </div>
+                                        <div class="col-8">
+                                            {{ form_widget(formSearch.dateFin) }}
+                                         </div>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="col-5">
+                            <div class="row">
+                                <div class="col-2">
+                                {{ form_widget(formSearch.organiser) }}
+                                </div>
+                                <div class="col-8 d-inline-block">
+                                {{ form_label(formSearch.organiser) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+                                {{ form_widget(formSearch.isInscrit) }}
+                                </div>
+                                <div class="col-8 d-inline-block">
+                                {{ form_label(formSearch.isInscrit) }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2 ">
+                                {{ form_widget(formSearch.isNotInscrit) }}
+                            </div>
+                            <div class="col-8 d-inline-block">
+                                {{ form_label(formSearch.isNotInscrit) }}
+                            </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2 ">
+                                {{ form_widget(formSearch.passee) }}
+                                </div>
+                            <div class="col-8 d-inline-block">
+                                {{ form_label(formSearch.passee) }}
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <button type="submit"> Rechercher</button>
+                            {{ form_end(formSearch) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <table class=" d-none d-md-block ">
+            <thead >
+            <tr>
+                <th scope="col">Nom de la sortie</th>
+                <th scope="col">Date de la sortie</th>
+                <th scope="col">Clôture</th>
+                <th scope="col">inscrits/place</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Inscrit</th>
+                <th scope="col">Organisateur</th>
+                <th scope="col">Actions</th>
+                <th scope="col">Campus</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for sortie in sorties %}
+                   <tr>
+                       <td>{{ sortie.nom }}</td>
+                       <td>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
+                        <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
+                        <td>{{ sortie.participants | length}} / {{ sortie.nbInscriptionsMax }}</td>
+                        <td>{{ sortie.etat.libelle }}</td>
+                         <td> {% if app.user in sortie.participants %}
+                               X
+                           {% endif %}
+                         </td>
+                       <td>
+                           <a href="{{ path('profil_detail', {'id' : sortie.organisateur.id} ) }}">{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom | slice(0,1)}}.</a>
+                       </td>
+                        <td>
+                           {% if sortie.etat.libelle == "Ouverte" %}
+                           <a href="{{ path('inscription', {'id': sortie.id}) }}">{{ sortie.isSubscribed(app.user) ? "Me désinscrire" : "M'inscrire" }}</a>
+                           <a href="{{ path('sortie_detail', {'id': sortie.id}) }}">Afficher</a>
+                           {% elseif sortie.etat.libelle == 'Creer' and sortie.organisateur == app.user %}
+                               <a href="{{ path('sortie_publier', {'id': sortie.id}) }}">Publier</a>
+                               <a href="{{ path('sortie_modifier', {'id': sortie.id}) }}">Modifier</a>
+                           {% endif %}
+                            {% if sortie.organisateur == app.user %}
+                                <a href="{{ path('sortie_supprimer', {'id': sortie.id}) }}">Annuler</a>
+                            {% endif %}
+                        </td>
+                       <td>{{ sortie.campus.nom }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center d-none d-md-block">
+          <a href="{{ path('sortie_creer') }}" class="btn btn-lg btn-info">Créer une sortie</a>
+        </div>
+
+        <table class="table table-bordered d-md-none">
+            <thead>
+                <tr>
+                    <th scope="col">Nom de la sortie</th>
+                    <th scope="col">Date de la sortie</th>
+                    <th scope="col">Lieu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sortie in sorties %}
+                <tr>
+                    <td><a href="{{ path('sortie_detail', {'id': sortie.id}) }}">{{ sortie.nom }}</a></td>
+                    <td>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
+                    <td>{{ sortie.lieu.nom }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+{% endblock %}
+
+{% block extrastyle %}
+    <style>
+        .box {
+            width: 90%;
+            margin-left: 90px;
+            margin-bottom: 30px;
+            padding: 10px;
+            position: inherit;
+            top: inherit;
+            left: inherit;
+
+            text-align: center;
+            transition: inherit;
+            margin-top: 50px;
+
+        }
+        label{
+            margin: 10px auto;
+            padding:inherit;
+            width: inherit;
+            text-transform: none;
+            text-align: inherit;
+            display: inline-block;
+        }
+        .box select,
+        .box input[type="search"],
+        .box input[type="date"],
+        .box input[type="checkbox"]{
+
+            background: none;
+            display: block;
+            margin: 10px auto;
+            text-align: center;
+            border: 2px solid #3498db;
+            padding: inherit;
+            width: inherit;
+            outline: none;
+            color: white;
+            border-radius: 24px;
+            transition: 0.25s
+        }
+        @media screen and (max-width: 1200px) {
+            table,
+            .box {
+                margin: inherit;
+
+            }
+        }
+
+
+
+    </style>
+{% endblock %}

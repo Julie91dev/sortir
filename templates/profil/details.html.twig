@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+    <div class="container">
+        <div class="row ">
+              <div class="col-md-6">
+                    <div class="card">
+                        <div class="box">
+                            <h2>{{ user.pseudo }}</h2>
+                            <div>
+                                <img src="{{ asset('uploads/picture/' ~ user.picture) }}" class="profil" alt="Responsive image">
+                            </div>
+                            <label>Prénom:{{ user.prenom }}</label><br>
+
+                            <label>Nom: {{ user.nom }}</label><br>
+                            <label>Téléphone: {{ user.telephone }}</label><br>
+                            <label>Email: {{ user.email }}</label><br>
+                            <label>Campus: {{ user.campus.nom }}</label><br>
+                            <a href="{{ path('main_home') }}">Retour</a><br>
+                        </div>
+                    </div>
+              </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block title %}
+ Profil utilisateur {{ parent() }}
+{% endblock %}
+{% block extrastyle %}
+<style>
+    .profil{
+        width: 200px;
+        height: 200px;
+    }
+</style>
+{% endblock %}

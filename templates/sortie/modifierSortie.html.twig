@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="box">
+
+                        {{ form_start(formModifierSorties) }}
+
+                        {{ form_label(formModifierSorties.nom) }}
+                        {{ form_widget(formModifierSorties.nom) }}
+
+                        {{ form_label(formModifierSorties.dateHeureDebut) }}
+                        {{ form_widget(formModifierSorties.dateHeureDebut) }}
+
+                        {{ form_label(formModifierSorties.dateLimiteInscription) }}
+                        {{ form_widget(formModifierSorties.dateLimiteInscription) }}
+
+                        {{ form_label(formModifierSorties.nbInscriptionsMax) }}
+                        {{ form_widget(formModifierSorties.nbInscriptionsMax) }}
+
+                        {{ form_label(formModifierSorties.duree) }}
+                        {{ form_widget(formModifierSorties.duree) }}
+
+                        {{ form_label(formModifierSorties.infosSortie) }}
+                        {{ form_widget(formModifierSorties.infosSortie) }}
+
+                        {{ form_label(formModifierSorties.campus) }}
+                        {{ form_widget(formModifierSorties.campus) }}
+
+
+                        {{ form_row(formModifierSorties.lieu ) }}
+                        <button type="submit" value="enregistrer" name="enregistrer">Enregistrer</button>
+                        <button type="submit" value="publier" name="publier">Publier la sortie</button>
+                        <button type="submit" value="supprimer" name="supprimer">Supprimer la sortie</button>
+                        <button type="submit" value="annuler" name="annuler">Annuler</button>
+                        {{ form_end(formModifierSorties) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block title %}
+    creer sortie | {{ parent() }}
+{% endblock %}
+

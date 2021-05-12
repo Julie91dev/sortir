@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout campus!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="box">
+                        {{ form_start(formCampus) }}
+                        <h3>Ajouter/modifier un campus</h3>
+                        <div class="row">
+                            <div class="col-4 ">
+                                {{ form_label(formCampus.nom) }}
+                            </div>
+                            <div class="col-8">
+                                {{ form_widget(formCampus.nom) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 ">
+                                <button type="submit" value="Enregistrer">Enregister</button>
+                            </div>
+                        </div>
+                        {{ form_end(formCampus) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

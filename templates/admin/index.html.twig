@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="text-center text-white">
+            <h2>Tableau de bord administrateur</h2>
+        </div>
+        <div class="card-deck text-center">
+            <div class="card text-center" >
+                <img src="{{ asset('img/logo_card_admin/logo_ajout_utilisateur.png') }}" class="card-img-top " alt="ajout_utilisateur" title="ajouter un utilisateur">
+               <div class="card-body">
+                   <h5 class="card-title">Ajouter un utilisateur</h5>
+               </div>
+                <div class="card-footer">
+                   <a href="{{ path('app_register') }}" class="btn btn-primary border border-success">Inscription</a>
+               </div>
+            </div>
+
+            <div class="card">
+                <img src="{{ asset('img/logo_card_admin/logo_utilisateurs.jpg') }}" class="card-img-top " alt="tous les utilisateurs" title="afficher tous les utilisateurs">
+                <div class="card-body">
+                    <h5 class="card-title">Afficher tous les utilisateurs</h5>
+                    <p class="card-text">Possibilité d'activité/ de desactiver et de supprimer un utilisateur</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('admin_utilisateurs') }}" class="btn btn-primary" title="Tous les utilisateurs ">Utilisateurs</a><br>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="{{ asset('img/logo_card_admin/logo_sortie.png') }}" class="card-img-top" alt="toutes les sorties" title="afficher toutes les sorties">
+                <div class="card-body">
+                    <h5 class="card-title">Afficher toutes les sorties</h5>
+                    <p class="card-text">Possibilité de d'annuler une sortie</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('admin_sorties') }}" class="btn btn-primary" title="Toutes les sorties">Sorties</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="{{ asset('img/logo_card_admin/logo_campus.jpg') }}" class="card-img-top" alt="campus" title="gerer les campus">
+                <div class="card-body">
+                    <h5 class="card-title">Gérer les campus</h5>
+                    <p class="card-text">Lister les campus. Possibilité d'ajouter un campus</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('campus') }}" class="btn btn-primary" title="Gerer les campus ">Campus</a><br>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="{{ asset('img/logo_card_admin/logo_city.png') }}" class="card-img-top" alt="toutes les villes" title="gerer les villes">
+                <div class="card-body">
+                    <h5 class="card-title">Gerer les villes</h5>
+                    <p class="card-text">Lister les villes. Possibilité d'ajouter une ville</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('ville') }}" class="btn btn-primary" title="Gerer les villes ">Villes</a><br>
+                </div>
+            </div>
+        </div>
+                        {# <div class="box">
+
+                        <p>inscrire un utilisateur</p>
+                        <a href="{{ path('campus') }}" title="Gerer les campus ">Gerer les campus</a><br>
+                        <a href="{{ path('ville') }}" title="Gerer les campus ">Gerer les villes</a><br>
+                        <a href="{{ path('admin_utilisateurs') }}" title="Tous les utilisateurs ">Tous les utilisateurs</a><br>
+                        <a href="{{ path('admin_sorties') }}" title="Toutes les sorties">Toutes les sorties</a>
+
+                    </div>#}
+
+
+    </div>
+{% endblock %}
+{% block extrastyle %}
+<style>
+    h2{
+        margin-top: 70px;
+    }
+    .card{
+        width: 25px;
+        color: black;
+        margin-top: 90px;
+        border: 4px solid #3498db;
+        border-radius: 24px;
+        background: rgba(254,254,254,0.7);
+    }
+    h5{
+        color: #0c5460;
+    }
+    img,
+    .card-img-top{
+        height: 130px;
+        border-top-left-radius: 24px;
+        border-top-right-radius: 24px;
+        background-color: white;
+    }
+</style>
+{% endblock %}

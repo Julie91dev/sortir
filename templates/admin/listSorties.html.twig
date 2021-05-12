@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="text-center text-white">
+        <h2>Liste de toutes les sorties</h2>
+    </div>
+    <table class=" d-none d-md-block ">
+        <thead >
+        <tr>
+            <th scope="col">Nom de la sortie</th>
+            <th scope="col">Date de la sortie</th>
+            <th scope="col">Clôture</th>
+            <th scope="col">inscrits/place</th>
+            <th scope="col">Etat</th>
+            <th scope="col">Inscrit</th>
+            <th scope="col">Organisateur</th>
+            <th scope="col">Campus</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sortie in sorties %}
+            <tr>
+                <td>{{ sortie.nom }}</td>
+                <td>{{ sortie.dateHeureDebut | date('d/m/Y H:i') }}</td>
+                <td>{{ sortie.dateLimiteInscription | date('d/m/Y') }}</td>
+                <td>{{ sortie.participants | length}} / {{ sortie.nbInscriptionsMax }}</td>
+                <td>{{ sortie.etat.libelle }}</td>
+                <td> {% if app.user in sortie.participants %}
+                        X
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('profil_detail', {'id' : sortie.organisateur.id} ) }}">{{ sortie.organisateur.prenom }} {{ sortie.organisateur.nom | slice(0,1)}}.</a>
+                </td>
+                <td>{{ sortie.campus.nom }}</td>
+                <td>{% if sortie.etat.libelle != "Annulée" %}
+                    <a href="{{ path('admin_annuler', {id: sortie.id}) }}" class="btn btn-warning">Annuler la sortie</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center d-none d-md-block">
+        <a href="{{ path('admin') }}" class="btn btn-lg btn-info">Retour</a>
+    </div>
+{% endblock %}
+
+{% block title %}
+    Admin liste sorties
+{% endblock %}
+{% block extrastyle %}
+    <style>
+        h2{
+            margin-top: 50px;
+        }
+        table{
+            margin-top: 70px;
+        }
+
+    </style>
+{% endblock %}

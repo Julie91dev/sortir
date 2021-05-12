@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ville!{% endblock %}
+
+{% block body %}
+
+    <div class="text-center text-white">
+        <br>
+        <h2>Gerer les ville</h2>
+    </div>
+
+    {# formulaire de recherche #}
+
+    <div class="row d-none d-md-block ">
+        <div class="col-12">
+            <div class="box ">
+                <div class="row">
+                    <div class="col-4 ">
+                        <h2 class="text-left">Filtrer les villes</h2>
+                        {{ form_start(formSearchVille) }}
+
+                        <div class="row">
+                            <div class="col-5">
+                                {{ form_label(formSearchVille.search) }}
+                            </div>
+                            <div class="col-7">
+                                {{ form_widget(formSearchVille.search) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <button type="submit"> Rechercher</button>
+                        {{ form_end(formSearchVille) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <a href="{{ path('ville_ajouter') }}" class="btn btn-success btn-lg">Ajouter une ville</a>
+    </div>
+
+    <table class=" d-none d-md-block ">
+        <thead >
+        <tr>
+            <th scope="col">Ville</th>
+            <th scope="col">code postal</th>
+            <th scope="col">Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for ville in ville %}
+            <tr>
+                <td>{{ ville.nom | upper}}</td>
+                <td>{{ ville.codePostal }}</td>
+                <td>
+                    <a href="{{ path('ville_modifier', {'id': ville.id}) }}" class="btn btn-info">Modifier</a>
+                    <a href="{{ path('ville_supprimer', {'id': ville.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+
+                </td>
+
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <div class="text-center d-none d-md-block">
+        <a href="{{ path('admin') }}" class="btn btn-lg btn-info">Retour</a>
+    </div>
+{% endblock %}
+{% block extrastyle %}
+    <style>
+        .box {
+            width: 90%;
+            margin-left: 90px;
+            margin-bottom: 30px;
+            padding: 10px;
+            position: inherit;
+            top: inherit;
+            left: inherit;
+
+            text-align: center;
+            transition: inherit;
+            margin-top: 70px;
+
+        }
+        label{
+            margin: 10px auto;
+            padding:inherit;
+            width: inherit;
+            text-transform: none;
+            text-align: inherit;
+            display: inline-block;
+        }
+        .box select,
+        .box input[type="search"],
+        .box input[type="date"],
+        .box input[type="checkbox"]{
+
+            background: none;
+            display: block;
+            margin: 10px auto;
+            text-align: center;
+            border: 2px solid #3498db;
+            padding: inherit;
+            width: inherit;
+            outline: none;
+            color: black;
+            border-radius: 24px;
+            transition: 0.25s
+        }
+        table{
+            margin-top: 50px;
+        }
+
+    </style>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="box">
+                     {{ form_start(formUser) }}
+                    <h2>Mon profil</h2>
+                    <div>
+                        <img src="{{ asset('uploads/picture/' ~ user.picture) }}" class="img-fluid img-thumbnail center-block" alt="Responsive image">
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ">
+                            {{ form_label(formUser.pseudo) }}
+                        </div>
+                        <div class="col-8">
+                            {{ form_widget(formUser.pseudo) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ">
+                            {{ form_label(formUser.nom) }}
+                        </div>
+                        <div class="col-8">
+                            {{ form_widget(formUser.nom) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ">
+                            {{ form_label(formUser.prenom) }}
+                        </div>
+                        <div class="col-8">
+                            {{ form_widget(formUser.prenom) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ">
+                            {{ form_label(formUser.telephone) }}
+                        </div>
+                        <div class="col-8">
+                            {{ form_widget(formUser.telephone) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ">
+                            {{ form_label(formUser.email) }}
+                        </div>
+                        <div class="col-8">
+                            {{ form_widget(formUser.email) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ">
+                            {{ form_label(formUser.password) }}
+                        </div>
+                        <div class="col-8">
+                            {{ form_widget(formUser.password) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ">
+                            {{ form_label(formUser.campus) }}
+                        </div>
+                        <div class="col-8">
+                            {{ form_widget(formUser.campus) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 ">
+                            {{ form_label(formUser.picture) }}
+                        </div>
+                        <div class="col-8">
+                            {{ form_widget(formUser.picture) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 ">
+                            <button type="submit" value="Enregistrer">Enregister</button>
+                        </div>
+                        <div class="col-6">
+                            <button type="reset" value="Annuler">Annuler</button>
+                        </div>
+                    </div>
+
+                    {{ form_end(formUser) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block title %}
+    modifier profil | {{ parent() }}
+{% endblock %}
+

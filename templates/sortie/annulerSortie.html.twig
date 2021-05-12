@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="box">
+                        {{ form_start(formAnnuleeSortie) }}
+                        <h2>Annuler une sortie</h2>
+                        <p>Nom de la sortie {{ sortie.nom }}</p>
+                        <p>Date et heure de la sortie {{ sortie.dateHeureDebut | date('d/m/Y') }}</p>
+
+                        <p>Campus {{ sortie.campus.nom }}</p>
+                        <p>Lieu {{ sortie.lieu.nom }}</p>
+                        <p>Rue {{ sortie.lieu.rue }}</p>
+                        <p>Code postal {{ sortie.lieu.ville.codePostal }}</p>
+                        <p>Motif {{ form_row(formAnnuleeSortie) }}</p>
+
+
+                        <button type="submit" value="enregistrer" name="enregistrer">Enregistrer</button>
+                        <button type="submit" value="Annuler" name="annuler">Annuler</button>
+                        {{ form_end(formAnnuleeSortie) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block title %}
+    creer sortie | {{ parent() }}
+{% endblock %}
+
