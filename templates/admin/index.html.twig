@@ -3,12 +3,13 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-    <div class="container">
+<div class="container-fluid">
         <div class="text-center text-white">
             <h2>Tableau de bord administrateur</h2>
         </div>
         <div class="card-deck text-center">
-            <div class="card text-center" >
+
+            <div class="card w-25" >
                 <img src="{{ asset('img/logo_card_admin/logo_ajout_utilisateur.png') }}" class="card-img-top " alt="ajout_utilisateur" title="ajouter un utilisateur">
                <div class="card-body">
                    <h5 class="card-title">Ajouter un utilisateur</h5>
@@ -18,7 +19,7 @@
                </div>
             </div>
 
-            <div class="card">
+            <div class="card w-25">
                 <img src="{{ asset('img/logo_card_admin/logo_utilisateurs.jpg') }}" class="card-img-top " alt="tous les utilisateurs" title="afficher tous les utilisateurs">
                 <div class="card-body">
                     <h5 class="card-title">Afficher tous les utilisateurs</h5>
@@ -61,26 +62,35 @@
                     <a href="{{ path('ville') }}" class="btn btn-primary" title="Gerer les villes ">Villes</a><br>
                 </div>
             </div>
+
+            <div class="card text-center" >
+                <img src="{{ asset('img/logo_card_admin/logo_download.jpg') }}" class="card-img-top " alt="ajout_fichier" title="telecharger un fichier">
+                <div class="card-body">
+                    <h5 class="card-title">Telecharger un fichier</h5>
+                    <p>Telecharger une liste d'utilisateur a partir d'un fichier au format .csv</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ path('admin_charger') }}" class="btn btn-primary border border-success">Telecharger</a>
+                </div>
+
+            </div>
         </div>
-                        {# <div class="box">
 
-                        <p>inscrire un utilisateur</p>
-                        <a href="{{ path('campus') }}" title="Gerer les campus ">Gerer les campus</a><br>
-                        <a href="{{ path('ville') }}" title="Gerer les campus ">Gerer les villes</a><br>
-                        <a href="{{ path('admin_utilisateurs') }}" title="Tous les utilisateurs ">Tous les utilisateurs</a><br>
-                        <a href="{{ path('admin_sorties') }}" title="Toutes les sorties">Toutes les sorties</a>
-
-                    </div>#}
+</div>
 
 
-    </div>
 {% endblock %}
 {% block extrastyle %}
 <style>
+    .container-fluid{
+        height: 1000px;
+        width: 1400px;
+    }
     h2{
         margin-top: 70px;
     }
     .card{
+        height: 500px;
         width: 25px;
         color: black;
         margin-top: 90px;

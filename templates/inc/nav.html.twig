@@ -1,21 +1,24 @@
-<nav class="navbar navbar-expand-lg fixed-top">
 
-        <a class="navbar-brand"   href="{{ path('main_home') }}"><img src="{{ asset('img/logo.jpg') }}" alt="Sortir !"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-    <ul class="navbar-nav ml-auto mt-2 mt-lg-0" >
-        {% if is_granted("ROLE_ADMIN") %}
-            <li class="nav-item active"><a class="nav-link" href="{{ path('admin') }}" title="DashBord Admin ">Admin</a></li>
+<div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top">
 
-        {% endif %}
-        <li class="nav-item active"><a class="nav-link" href="{{ path('main_home') }}" title="Home">Home</a></li>
-        <li class="nav-item active"><a class="nav-link" href="{{ path('profil_update')}}" title="mon profil">Mon profil</a></li>
-        <li class="nav-item active"><a class="nav-link" href="{{path('app_logout')}}" title="Logout">Se déconnecter </a></li>
+            <a class="navbar-brand"   href="{{ path('main_home') }}"><img src="{{ asset('img/logo.jpg') }}" alt="Sortir !"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0" >
+            {% if is_granted("ROLE_ADMIN") %}
+                <li class="nav-item active"><a class="nav-link" href="{{ path('admin') }}" title="DashBord Admin ">Admin</a></li>
 
-    </ul>
-        </div>
+            {% endif %}
+            <li class="nav-item active"><a class="nav-link" href="{{ path('main_home') }}" title="Home">Home</a></li>
+            <li class="nav-item active"><a class="nav-link" href="{{ path('profil_update')}}" title="mon profil">Mon profil</a></li>
+            <li class="nav-item active"><a class="nav-link" href="{{path('app_logout')}}" title="Logout">Se déconnecter </a></li>
+
+        </ul>
+            </div>
 
 
-</nav>
+    </nav>
+</div>

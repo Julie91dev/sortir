@@ -23,7 +23,7 @@ class VilleController extends AbstractController
         //Formulaire de recherche
         $formSearchVille= $this->createForm(SearchVilleType::class);
 
-       // $formSearchVille->handleRequest($request);
+        $formSearchVille->handleRequest($request);
 
         if($formSearchVille->isSubmitted() && $formSearchVille->isValid()) {
             $criteres = $formSearchVille->getData();
@@ -58,8 +58,7 @@ class VilleController extends AbstractController
         }
         return $this->render('admin/ville/ajoutVille.html.twig', [
             'controller_name' => 'VilleController',
-            'formVille' => $formVille->createView(),
-            'ville' => $ville
+            'formVille' => $formVille->createView()
         ]);
     }
     #[Route('/ville/modifier/{id}', name: 'ville_modifier')]

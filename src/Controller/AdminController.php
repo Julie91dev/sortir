@@ -2,13 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UploadFichierType;
+use App\Repository\CampusRepository;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AdminController extends AbstractController
 {
@@ -79,5 +84,58 @@ class AdminController extends AbstractController
         $manager->flush();
         $this->addFlash("success", "La sortie a été annulée : " . $sortie->getNom());
         return $this->redirectToRoute('admin_sorties');
+    }
+    #[Route('/admin/charger', name: 'admin_charger')]
+    public function chargerFichierCSV(Request $request,
+                                      UserPasswordEncoderInterface $passwordEncoder,
+                                        EntityManagerInterface $manager,
+                                      CampusRepository $campusRepository){
+        $csvForm = $this->createForm(UploadFichierType::class);
+
+        $csvForm->handleRequest($request);
+        if ($csvForm->isSubmitted() && $csvForm->isValid()){
+            $data = $csvForm->getData();
+            $filecCSV = $data['csv'];
+
+            //On ouvre le fichier
+            $handle=fopen($filecCSV->getRealPath(), 'r');
+            //on récupère les lignes une par une
+
+            while (($data = fgetcsv($handle, 1000, ";")) !== false){
+
+                //On recupère le campus
+                $idCampus = $data[0];
+                $campus = $campusRepository->find($idCampus);
+
+                //On créer un nouveau utilisateur
+                $user = new  User();
+                $user->setCampus($campus);
+                $user->setEmail($data[1]);
+                $user->setRoles([$data[2]]);
+                //On recupère le mot de passe et on le hash
+                $mdp = $data[3];
+                $hash = $passwordEncoder->encodePassword($user, $mdp);
+                $user->setPassword($hash);
+
+                $user->setNom($data[4]);
+                $user->setPrenom($data[5]);
+                $user->setTelephone($data[6]);
+                $user->setAdministrateur($data[7]);
+                $user->setActif($data[8]);
+                $user->setPseudo($data[9]);
+                $user->setPicture($data[10]);
+
+                $manager->persist($user);
+            }
+            $manager->flush();
+            fclose($handle);
+
+            $this->addFlash('succes', 'Les données du fichiers ont été intégré a la base de donnée');
+            $this->redirectToRoute('admin_utilisateurs');
+        }
+        return $this->render('admin/uploadFichier.html.twig', [
+            'controller_name' => 'AdminController',
+            'csvForm' => $csvForm->createView()]);
+
     }
 }
