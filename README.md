@@ -24,6 +24,7 @@ Projet réalisé pendant la formation à l'ENI - Php Symphony
 6. créer la base de données
 
 	`php bin/console doctrine:database:create`
+	
 	`php bin/console doctrine:schema:update --force`
 
 7.Charger les données de test
