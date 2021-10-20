@@ -20,7 +20,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
 
-    #[Route('/sorties', name: 'sortie')]
+
+    /**
+     * @Route("/sorties", name="sortie")
+     */
     public function list(SortieRepository $sortieRepository): Response
     {
 
@@ -32,7 +35,9 @@ class SortieController extends AbstractController
     }
 
 
-    #[Route('/sorties/creer', name: 'sortie_creer')]
+    /**
+     * @Route("/sorties/creer", name="sortie_creer")
+     */
     public function creerSortie(SortieRepository $sortieRepository,
                                 EntityManagerInterface $manager, Request $request): Response
     {
@@ -81,7 +86,10 @@ class SortieController extends AbstractController
     }
 
 
-    #[Route('/sorties/detail/{id}', name: 'sortie_detail')]
+
+    /**
+     * @Route("/sorties/detail/{id}", name="sortie_detail")
+     */
     public function detailSortie($id, SortieRepository $sortieRepository){
         $sortie = $sortieRepository->find($id);
 
@@ -91,7 +99,10 @@ class SortieController extends AbstractController
     }
 
 
-    #[Route('/sorties/publier/{id}', name: 'sortie_publier')]
+
+    /**
+     * @Route("/sorties/publier/{id}", name="sortie_publier")
+     */
     public function publierSortie($id){
 
         $manager = $this->getDoctrine()->getManager();
@@ -108,7 +119,10 @@ class SortieController extends AbstractController
     }
 
 
-    #[Route('/sorties/modifier/{id}', name: 'sortie_modifier')]
+
+    /**
+     * @Route("/sorties/modifier/{id}", name="sortie_modifier")
+     */
     public function modifierSortie($id,SortieRepository $sortieRepository, Request $request, EntityManagerInterface $manager){
         $sortie = $sortieRepository->find($id);
         $formModifierSorties = $this->createForm(SortieType::class, $sortie);
@@ -144,7 +158,10 @@ class SortieController extends AbstractController
     }
 
 
-    #[Route('/sorties/supprimer/{id}', name: 'sortie_supprimer')]
+
+    /**
+     * @Route("/sorties/supprimer/{id}", name="sortie_supprimer")
+     */
     public function supprimerSortie($id, SortieRepository $sortieRepository,EntityManagerInterface $manager, Request $request)
     {
         $sortie = $sortieRepository->find($id);

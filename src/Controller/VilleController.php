@@ -15,7 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VilleController extends AbstractController
 {
-    #[Route('/ville', name: 'ville')]
+
+    /**
+     * @Route("/ville", name="ville")
+     */
     public function index(EntityManagerInterface $manager, VilleRepository $villeRepository, Request $request): Response
     {
         $ville = $villeRepository->findAll();
@@ -39,7 +42,10 @@ class VilleController extends AbstractController
             'ville' => $ville
         ]);
     }
-    #[Route('/ville/ajouter', name: 'ville_ajouter')]
+
+    /**
+     * @Route("/ville/ajouter", name="ville_ajouter")
+     */
     public function ajouterVille(EntityManagerInterface $manager, Request $request): Response
     {
         $ville = new Ville();
@@ -61,7 +67,10 @@ class VilleController extends AbstractController
             'formVille' => $formVille->createView()
         ]);
     }
-    #[Route('/ville/modifier/{id}', name: 'ville_modifier')]
+
+    /**
+     * @Route("/ville/modifier/{id}", name="ville_modifier")
+     */
     public function modifierVille(int $id, VilleRepository $villeRepository, Request $request){
         $ville = $villeRepository->find($id);
 
@@ -81,7 +90,10 @@ class VilleController extends AbstractController
             'ville' => $ville
         ]);
     }
-    #[Route('/ville/supprimer/{id}', name: 'ville_supprimer')]
+
+    /**
+     * @Route("/ville/supprimer/{id}", name="ville_supprimer")
+     */
     public function supprimerVille(int $id, VilleRepository $villeRepository){
         $ville = $villeRepository->find($id);
         $nomVille = $ville->getNom();

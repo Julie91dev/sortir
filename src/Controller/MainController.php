@@ -18,7 +18,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class MainController extends AbstractController
 {
-    #[Route('/main', name: 'main_home')]
+
+    /**
+     * @Route("/main", name="main_home")
+     */
     public function index(SortieRepository $sortieRepository,
                           Request $request,
                           EntityManagerInterface $manager,
@@ -28,23 +31,17 @@ class MainController extends AbstractController
         //recupération de l'utilisateur connecté // recuperation de l'Id
         $user = $request->getUser();
 
-        //dd($idUser);
         //creation du formulaire de recherche
         $formSearch = $this->createForm(SearchSortieType::class);
 
-        //recupération de toutes les sorties
-        //$sorties = $manager->getRepository(Sortie::class)->findAll();
-        //gestion de l'etat en fonction de la date
-        //foreach ($sorties as $sortie) {
 
-          //  if ($sortie->getEtat()->getLibelle() != "Annulée" && $sortie->getEtat()->getLibelle() != "Creer") {
-            //    $this->dateModifieEtat($sortieRepository, $manager);
-            //}
-        //}
-        $this->dateModifieEtat($sortieRepository, $manager);
-        //filtre sur les sorties - traitement du formualaire
+        //gestion de l'etat en fonction de la date
+         $this->dateModifieEtat($sortieRepository, $manager);
+
+         //filtre sur les sorties - traitement du formualaire
             //recupération des info dans la requete
              $formSearch->handleRequest($request);
+
         //affichage de base
 
         $campusSelect = 4;

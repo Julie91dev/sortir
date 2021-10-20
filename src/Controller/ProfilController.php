@@ -17,7 +17,9 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProfilController extends AbstractController
 {
-    #[Route('/profil/update', name: 'profil_update')]
+    /**
+     * @Route("/profil/update", name="profil_update")
+     */
     public function update(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $passwordEncoder, SluggerInterface $slugger): Response
     {
         //recuperation du repository et recuperation des info utilisateur
@@ -71,7 +73,9 @@ class ProfilController extends AbstractController
 
     }
 
-    #[Route('/profil/detail/{id}', name: 'profil_detail')]
+    /**
+     * @Route("/profil/detail/{id}", name="profil_detail")
+     */
     public function detail(EntityManagerInterface $manager, int $id): Response
     {
         $user = $manager->getRepository(User::class)->find($id);

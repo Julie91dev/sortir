@@ -16,7 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CampusController extends AbstractController
 {
-    #[Route('/campus', name: 'campus')]
+    /**
+     * @Route("/campus", name="campus")
+     */
     public function index(CampusRepository $campusRepository): Response
     {
         $campus = $campusRepository->findAll();
@@ -35,7 +37,10 @@ class CampusController extends AbstractController
             'campus' => $campus
         ]);
     }
-    #[Route('/campus/ajouter', name: 'campus_ajouter')]
+
+    /**
+     * @Route("/campus/ajouter", name="campus_ajouter")
+     */
     public function ajouterCampus(EntityManagerInterface $manager, Request $request): Response
     {
         $campus = new Campus();
@@ -58,7 +63,10 @@ class CampusController extends AbstractController
             'campus' => $campus
         ]);
     }
-    #[Route('/campus/modifier/{id}', name: 'campus_modifier')]
+
+    /**
+     * @Route("/campus/modifier/{id}", name="campus_modifier")
+     */
     public function modifierCampus(int $id, CampusRepository $campusRepository, Request $request){
         $campus = $campusRepository->find($id);
 
@@ -78,7 +86,10 @@ class CampusController extends AbstractController
             'campus' => $campus
         ]);
     }
-    #[Route('/campus/supprimer/{id}', name: 'campus_supprimer')]
+
+    /**
+     * @Route("/campus/supprimer/{id}", name="campus_supprimer")
+     */
     public function supprimerCampus(int $id, CampusRepository $campusRepository){
         $campus = $campusRepository->find($id);
         $nomCampus = $campus->getNom();

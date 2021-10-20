@@ -17,12 +17,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class InscriptionController extends AbstractController
 {
-    #[Route('/sortie/inscription/{id}', name: 'inscription', methods: ["GET","POST"])]
+
     /**
+     * @Route("/sortie/inscription/{id}", name="inscription", methods={"GET", "POST"})
      * @ParamConverter("sortie", options={"id"="id"})
-     *
      */
-        public function inscription(EntityManagerInterface $manager, SortieRepository $sortieRepository,int $id): Response
+    public function inscription(EntityManagerInterface $manager, SortieRepository $sortieRepository,int $id): Response
     {
 
         $sortie = $this->getDoctrine()->getRepository(Sortie::class)->find($id);
@@ -77,7 +77,10 @@ class InscriptionController extends AbstractController
         return $this->redirectToRoute('sortie_detail', ["id" => $sortie->getId()]);
     }
 
-    #[Route('/sortie/desister/{id}', name: 'inscription_desister', methods: ["GET","POST"])]
+
+    /**
+     * @Route("/sortie/desister/{id}", name="inscription_desister", methods={"GET", "POST"})
+     */
     public function desister($id, EntityManagerInterface $manager){
         //Recupération de la sortie
         $sortie = $this->getDoctrine()->getRepository(Sortie::class)->find($id);

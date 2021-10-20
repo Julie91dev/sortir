@@ -17,14 +17,20 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AdminController extends AbstractController
 {
-    #[Route('/admin', name: 'admin')]
+
+    /**
+     * @Route("/admin", name="admin")
+     */
     public function index(): Response
     {
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
         ]);
     }
-    #[Route('/admin/utilisateurs', name: 'admin_utilisateurs')]
+
+    /**
+     * @Route("/admin/utilisateurs", name="admin_utilisateurs")
+     */
     public function listUtilisateurs(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAll();
@@ -34,7 +40,10 @@ class AdminController extends AbstractController
             'users' => $users
         ]);
     }
-    #[Route('/admin/utilisateurs/activer/{id}', name: 'admin_activer')]
+
+    /**
+     * @Route("/admin/utilisateurs/activer/{id}", name="admin_activer")
+     */
     public function activerUtilisateurs(UserRepository $userRepository,int $id, EntityManagerInterface $manager): Response
     {
         $user = $userRepository->find($id);
@@ -45,7 +54,10 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_utilisateurs');
 
     }
-    #[Route('/admin/utilisateurs/desactiver/{id}', name: 'admin_desactiver')]
+
+    /**
+     * @Route("/admin/utilisateurs/desactiver/{id}", name="admin_desactiver")
+     */
     public function desactiverUtilisateurs(UserRepository $userRepository,int $id, EntityManagerInterface $manager): Response
     {
         $user = $userRepository->find($id);
@@ -55,7 +67,10 @@ class AdminController extends AbstractController
         $this->addFlash("success", "Utilisateur desactivé : " . $user->getPseudo());
         return $this->redirectToRoute('admin_utilisateurs');
     }
-    #[Route('/admin/utilisateurs/supprimers/{id}', name: 'admin_supprimer')]
+
+    /**
+     * @Route("/admin/utilisateurs/supprimers/{id}", name="admin_supprimer")
+     */
     public function supprimerUtilisateurs(UserRepository $userRepository,int $id, EntityManagerInterface $manager): Response
     {
         $user = $userRepository->find($id);
@@ -65,7 +80,11 @@ class AdminController extends AbstractController
         $this->addFlash("success", "Utilisateur supprimé : " . $pseudo);
         return $this->redirectToRoute('admin_utilisateurs');
     }
-    #[Route('/admin/sorties', name: 'admin_sorties')]
+
+
+    /**
+     * @Route("/admin/sorties", name="admin_sorties")
+     */
     public function listSorties(SortieRepository $sortieRepository): Response
     {
         $sorties = $sortieRepository->findAll();
@@ -74,7 +93,10 @@ class AdminController extends AbstractController
             'sorties' => $sorties
         ]);
     }
-    #[Route('/admin/sorties/annuler/{id}', name: 'admin_annuler')]
+
+    /**
+     * @Route("/admin/sorties/annuler/{id}", name="admin_annuler")
+     */
     public function annulerSortie(SortieRepository $sortieRepository, int $id, EntityManagerInterface $manager, EtatRepository $etatRepository): Response
     {
         $sortie = $sortieRepository->find($id);
@@ -85,7 +107,10 @@ class AdminController extends AbstractController
         $this->addFlash("success", "La sortie a été annulée : " . $sortie->getNom());
         return $this->redirectToRoute('admin_sorties');
     }
-    #[Route('/admin/charger', name: 'admin_charger')]
+
+    /**
+     * @Route("/admin/charger", name="admin_charger")
+     */
     public function chargerFichierCSV(Request $request,
                                       UserPasswordEncoderInterface $passwordEncoder,
                                         EntityManagerInterface $manager,
